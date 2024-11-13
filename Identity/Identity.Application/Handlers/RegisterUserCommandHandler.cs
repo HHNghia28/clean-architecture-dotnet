@@ -52,7 +52,7 @@ namespace Identity.Application.Handlers
             await _unitOfWork.SaveAsync();
 
             string url = _configuration["Base:Url"] ?? string.Empty;
-            string content = url + "/api/confirm-email?userId=" + userId + "&code=" + code;
+            string content = url + "/api/auth/confirm-email?userId=" + userId + "&code=" + code;
 
             await _emailSender.SendEmailAsync(command.Email, "Confirm email", content);
         }
