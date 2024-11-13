@@ -74,4 +74,4 @@ Please share this Repository within your developer community, if you think that 
 
 ## Licensing
 
-iammukeshm/CleanArchitecture.WebApi Project is licensed with the [MIT License](https://github.com/HHNghia28/clean-architecture-dotnet/blob/main/LICENSE).
+Project is licensed with the [MIT License](https://github.com/HHNghia28/clean-architecture-dotnet/blob/main/LICENSE).
