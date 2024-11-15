@@ -8,6 +8,9 @@ namespace Identity.Domain.Interfaces.Services
 {
     public interface IAuthenticatedUserService
     {
-        string UserId { get; }
+        public string UserId { get; }
+        public string Name { get; }
+        public string Email { get; }
+        public string Role { get; }
     }
 }
