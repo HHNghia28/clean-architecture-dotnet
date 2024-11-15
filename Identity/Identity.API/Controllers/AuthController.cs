@@ -88,5 +88,33 @@ namespace Identity.API.Controllers
                 return Unauthorized(ex.Message);
             }
         }
+
+        [HttpPut("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command)
+        {
+            try
+            {
+                await _mediator.Send(command);
+                return Ok("Email sended");
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+        }
+
+        [HttpPut("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command)
+        {
+            try
+            {
+                await _mediator.Send(command);
+                return Ok("Reset password successful");
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+        }
     }
 }

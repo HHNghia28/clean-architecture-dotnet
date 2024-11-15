@@ -31,7 +31,18 @@ namespace Identity.Infrastructure.Repositories
             return true;
         }
 
-        public async Task<bool> ConfirmEmail(Guid userId, string code)
+        public async Task<bool> ConfirmEmail(Guid userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user == null) return false;
+
+            user.IsEmailConfirmed = true;
+
+            return true;
+        }
+
+        public async Task<bool> IsVerifyCode(Guid userId, string code)
         {
             var user = await _context.Users.FindAsync(userId);
 
@@ -39,8 +50,6 @@ namespace Identity.Infrastructure.Repositories
 
             var confirm = await _context.EmailConfirmationTokens
                 .FirstOrDefaultAsync(e => e.UserId == userId && e.Token.Equals(code) && e.ExpirationDate >= DateTime.UtcNow);
-
-            if (confirm != null) user.IsEmailConfirmed = true;
 
             return confirm != null;
         }

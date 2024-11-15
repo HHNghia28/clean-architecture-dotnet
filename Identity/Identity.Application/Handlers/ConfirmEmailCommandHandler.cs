@@ -20,7 +20,9 @@ namespace Identity.Application.Handlers
 
         async Task<bool> IRequestHandler<ConfirmEmailCommand, bool>.Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
         {
-            var confirm = await _unitOfWork.Users.ConfirmEmail(request.UserId, request.Code);
+            var confirm = await _unitOfWork.Users.IsVerifyCode(request.UserId, request.Code);
+
+            if (confirm) await _unitOfWork.Users.ConfirmEmail(request.UserId);
 
             await _unitOfWork.SaveAsync();
 
