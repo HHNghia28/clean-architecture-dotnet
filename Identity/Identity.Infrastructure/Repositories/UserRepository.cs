@@ -20,6 +20,17 @@ namespace Identity.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<bool> ChangePassword(Guid userId, string newHashPassword)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user == null) return false;
+
+            user.PasswordHash = newHashPassword;
+
+            return true;
+        }
+
         public async Task<bool> ConfirmEmail(Guid userId, string code)
         {
             var user = await _context.Users.FindAsync(userId);

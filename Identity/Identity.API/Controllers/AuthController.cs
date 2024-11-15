@@ -62,12 +62,26 @@ namespace Identity.API.Controllers
         }
 
         [HttpPost("resend-confirm")]
-        public async Task<IActionResult> ReSendConfirmEmail([FromQuery] ResendConfirmEmailCommand command)
+        public async Task<IActionResult> ReSendConfirmEmail([FromBody] ResendConfirmEmailCommand command)
         {
             try
             {
                 await _mediator.Send(command);
                 return Ok("Resend successful");
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+        }
+
+        [HttpPut("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordCommand command)
+        {
+            try
+            {
+                await _mediator.Send(command);
+                return Ok("Change password successful");
             }
             catch (Exception ex)
             {
