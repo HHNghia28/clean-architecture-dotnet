@@ -28,10 +28,10 @@ namespace Identity.Application.Handlers
         public async Task<LoginResponse> Handle(LoginUserCommand command, CancellationToken cancellationToken)
         {
             var user = await _unitOfWork.Users.GetByEmailAsync(command.Email);
-            if (user == null || !_passwordHasher.VerifyPassword(command.Password, user.PasswordHash))
-            {
-                throw new Exception("Invalid credentials");
-            }
+
+            if (user == null || !_passwordHasher.VerifyPassword(command.Password, user.PasswordHash)) throw new Exception("Invalid credentials");
+
+            if (!user.IsEmailConfirmed) throw new Exception("Please confirm email");
 
             var token = _tokenService.GenerateJwtToken(user);
 

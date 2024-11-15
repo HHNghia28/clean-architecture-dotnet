@@ -36,6 +36,9 @@ namespace Identity.API.Controllers
             try
             {
                 var response = await _mediator.Send(command);
+
+                if (response == null) return Unauthorized("Email or Password invalid");
+
                 return Ok(response);
             }
             catch (Exception ex)
@@ -51,6 +54,20 @@ namespace Identity.API.Controllers
             {
                 var response = await _mediator.Send(command);
                 return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+        }
+
+        [HttpPost("resend-confirm")]
+        public async Task<IActionResult> ReSendConfirmEmail([FromQuery] ResendConfirmEmailCommand command)
+        {
+            try
+            {
+                await _mediator.Send(command);
+                return Ok("Resend successful");
             }
             catch (Exception ex)
             {
