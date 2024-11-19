@@ -18,6 +18,7 @@ using Auth.DataAccess.MailHandle;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.OpenApi.Models;
+using Identity.Domain.Interfaces.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,6 +60,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+builder.Services.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
 
 builder.Services.AddMediatR(options =>
 {

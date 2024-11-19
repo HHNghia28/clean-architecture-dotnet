@@ -75,5 +75,18 @@ namespace Identity.Infrastructure.Repositories
                 .Include(user => user.Role)
                 .FirstOrDefaultAsync(user => user.Email == email);
         }
+
+        public async Task<bool> UpdateUser(User u)
+        {
+            var user = await _context.Users.FindAsync(u.Id);
+
+            if (user == null) return false;
+
+            user.FullName = u.FullName;
+            user.Email = u.Email;
+            user.RoleId = u.RoleId;
+
+            return true;
+        }
     }
 }

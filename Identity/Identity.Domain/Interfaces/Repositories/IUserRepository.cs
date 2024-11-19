@@ -14,5 +14,6 @@ namespace Identity.Domain.Interfaces.Repositories
         Task<bool> ConfirmEmail(Guid userId);
         Task<bool> ChangePassword(Guid userId, string newHashPassword);
         Task<bool> IsVerifyCode(Guid userId, string code);
+        Task<bool> UpdateUser(User user);
     }
 }
