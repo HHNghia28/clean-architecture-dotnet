@@ -29,10 +29,8 @@ namespace Identity.Application.Handlers
         async Task IRequestHandler<ResendConfirmEmailCommand>.Handle(ResendConfirmEmailCommand command, CancellationToken cancellationToken)
         {
             var existingUser = await _unitOfWork.Users.GetByEmailAsync(command.Email);
-            if (existingUser == null)
-            {
-                throw new Exception("User not found");
-            }
+
+            if (existingUser == null) throw new Exception("User not found");
 
             string code = await _unitOfWork.Users.GenerateCodeConfirmEmail(existingUser.Id);
 

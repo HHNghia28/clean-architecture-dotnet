@@ -29,10 +29,8 @@ namespace Identity.Application.Handlers
         async Task IRequestHandler<RegisterUserCommand>.Handle(RegisterUserCommand command, CancellationToken cancellationToken)
         {
             var existingUser = await _unitOfWork.Users.GetByEmailAsync(command.Email);
-            if (existingUser != null)
-            {
-                throw new Exception("User already exists");
-            }
+
+            if (existingUser != null) throw new Exception("User already exists");
 
             Guid userId = Guid.NewGuid();
 

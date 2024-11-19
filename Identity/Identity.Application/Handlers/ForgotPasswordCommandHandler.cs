@@ -1,4 +1,4 @@
-﻿using Identity.Application.Commands;
+﻿ using Identity.Application.Commands;
 using Identity.Domain.Interfaces.UnitOfWork;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
