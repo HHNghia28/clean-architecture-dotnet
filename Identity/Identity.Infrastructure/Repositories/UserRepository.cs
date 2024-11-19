@@ -112,5 +112,16 @@ namespace Identity.Infrastructure.Repositories
 
             return token?.User;
         }
+
+        public async Task<bool> ChangeIsDeletedUser(Guid userId, bool isDeleted)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user == null) return false;
+
+            user.IsDeleted = isDeleted;
+
+            return true;
+        }
     }
 }

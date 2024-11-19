@@ -130,5 +130,45 @@ namespace Identity.API.Controllers
                 return Unauthorized(ex.Message);
             }
         }
+
+        [HttpPut("{id}/block")]
+        public async Task<IActionResult> Block(Guid id)
+        {
+            try
+            {
+                ChangeIsDeletedUserCommand command = new()
+                {
+                    IsDeleted = true,
+                    UserId = id
+                };
+
+                await _mediator.Send(command);
+                return Ok("Block successful");
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+        }
+
+        [HttpPut("{id}/unblock")]
+        public async Task<IActionResult> UnBlock(Guid id)
+        {
+            try
+            {
+                ChangeIsDeletedUserCommand command = new()
+                {
+                    IsDeleted = false,
+                    UserId = id
+                };
+
+                await _mediator.Send(command);
+                return Ok("UnBlock successful");
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+        }
     }
 }

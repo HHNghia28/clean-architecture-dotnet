@@ -24,10 +24,13 @@ namespace Identity.API.Controllers
             return Ok(await _mediator.Send(request));
         }
 
-        [HttpGet("id")]
-        public async Task<IActionResult> Get([FromQuery] GetUserQuery request)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(Guid id)
         {
-            return Ok(await _mediator.Send(request));
+            return Ok(await _mediator.Send(new GetUserQuery
+            {
+                Id = id
+            }));
         }
 
         [HttpPut]
