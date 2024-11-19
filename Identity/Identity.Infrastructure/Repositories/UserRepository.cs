@@ -88,5 +88,29 @@ namespace Identity.Infrastructure.Repositories
 
             return true;
         }
+
+        public async Task<bool> SaveRefreshToken(Guid userId, string refreshToken, DateTime ExpirationDate)
+        {
+            await _context.RefreshTokens.AddAsync(new RefreshToken
+            {
+                Id = Guid.NewGuid(),
+                Token = refreshToken,
+                ExpirationDate = ExpirationDate,
+                UserId = userId
+            });
+
+            return true;
+        }
+
+        public async Task<User> GetUserByRefreshToken(string refreshToken)
+        {
+            var token = await _context.RefreshTokens
+                .Include(t => t.User)
+                .ThenInclude(t => t.Role)
+                .FirstOrDefaultAsync(t => t.Token.ToLower().Equals(refreshToken.ToLower()) 
+                && t.ExpirationDate >= DateTime.UtcNow);
+
+            return token?.User;
+        }
     }
 }

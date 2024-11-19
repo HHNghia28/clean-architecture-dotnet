@@ -15,5 +15,7 @@ namespace Identity.Domain.Interfaces.Repositories
         Task<bool> ChangePassword(Guid userId, string newHashPassword);
         Task<bool> IsVerifyCode(Guid userId, string code);
         Task<bool> UpdateUser(User user);
+        Task<bool> SaveRefreshToken(Guid userId, string refreshToken, DateTime ExpirationDate);
+        Task<User> GetUserByRefreshToken(string refreshToken);
     }
 }

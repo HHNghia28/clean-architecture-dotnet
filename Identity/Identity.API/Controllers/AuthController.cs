@@ -116,5 +116,19 @@ namespace Identity.API.Controllers
                 return Unauthorized(ex.Message);
             }
         }
+
+        [HttpPut("access-token")]
+        public async Task<IActionResult> AccessToken([FromBody] AccessTokenCommand command)
+        {
+            try
+            {
+                var response = await _mediator.Send(command);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+        }
     }
 }

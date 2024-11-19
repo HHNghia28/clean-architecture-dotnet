@@ -33,13 +33,18 @@ namespace Identity.Application.Handlers
 
             if (!user.IsEmailConfirmed) throw new Exception("Please confirm email");
 
-            var token = _tokenService.GenerateJwtToken(user);
+            var accessToken = _tokenService.GenerateJwtToken(user);
+            var refreshToken = _tokenService.GenerateRefreshToken(64);
+
+            await _unitOfWork.Users.SaveRefreshToken(user.Id, refreshToken, DateTime.UtcNow.AddDays(1));
+            await _unitOfWork.SaveAsync();
 
             return new LoginResponse
             {
                 Email = user.Email,
                 FullName = user.FullName,
-                Token = token
+                AccessToken = accessToken,
+                RefreshToken = refreshToken
             };
         }
     }

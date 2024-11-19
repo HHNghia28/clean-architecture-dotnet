@@ -10,5 +10,6 @@ namespace Identity.Domain.Interfaces.Services
     public interface ITokenService
     {
         string GenerateJwtToken(User user);
+        string GenerateRefreshToken(int length = 64);
     }
 }
