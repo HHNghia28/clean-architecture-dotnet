@@ -13,12 +13,10 @@ namespace Identity.Application.Handlers
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IPasswordHasher _passwordHasher;
 
-        public UpdateUserCommandHandler(IUnitOfWork unitOfWork, IPasswordHasher passwordHasher)
+        public UpdateUserCommandHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _passwordHasher = passwordHasher;
         }
 
         public async Task Handle(UpdateUserCommand request, CancellationToken cancellationToken)
