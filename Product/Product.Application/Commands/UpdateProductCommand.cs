@@ -1,16 +1,18 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Product.Domain.Models
+namespace Product.Application.Commands
 {
-    public class Product
+    public class UpdateProductCommand : IRequest
     {
-        [Key]
-        public Guid Id { get; set; }
+        [JsonIgnore]
+        public Guid Id { get; set; }    
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
@@ -20,13 +22,8 @@ namespace Product.Domain.Models
         public int Discount { get; set; } = 0;
         [StringLength(500)]
         public string Photo { get; set; }
-        public bool IsDeleted { get; set; } = false;
 
-        public Guid CreatedBy { get; set; }
         public Guid UpdatedBy { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
         public int CategoryId { get; set; }
-        public Category Category { get; set; }
     }
 }

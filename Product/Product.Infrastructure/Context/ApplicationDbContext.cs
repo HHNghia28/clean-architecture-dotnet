@@ -134,19 +134,29 @@ namespace Product.Infrastructure.Context
         {
             var entries = ChangeTracker
                 .Entries()
-                .Where(e => e.Entity is Category &&
-                            (e.State == EntityState.Added || e.State == EntityState.Modified));
+                .Where(e =>
+                    (e.Entity is Category || e.Entity is Domain.Models.Product) &&
+                    (e.State == EntityState.Added || e.State == EntityState.Modified));
 
             foreach (var entry in entries)
             {
-                var entity = (Category)entry.Entity;
-
-                if (entry.State == EntityState.Added)
+                if (entry.Entity is Category category)
                 {
-                    entity.CreatedAt = DateTime.UtcNow;
+                    if (entry.State == EntityState.Added)
+                    {
+                        category.CreatedAt = DateTime.UtcNow;
+                    }
+                    category.UpdatedAt = DateTime.UtcNow;
                 }
 
-                entity.UpdatedAt = DateTime.UtcNow;
+                if (entry.Entity is Domain.Models.Product product)
+                {
+                    if (entry.State == EntityState.Added)
+                    {
+                        product.CreatedAt = DateTime.UtcNow;
+                    }
+                    product.UpdatedAt = DateTime.UtcNow;
+                }
             }
 
             return base.SaveChanges();
@@ -156,22 +166,33 @@ namespace Product.Infrastructure.Context
         {
             var entries = ChangeTracker
                 .Entries()
-                .Where(e => e.Entity is Category &&
-                            (e.State == EntityState.Added || e.State == EntityState.Modified));
+                .Where(e =>
+                    (e.Entity is Category || e.Entity is Domain.Models.Product) &&
+                    (e.State == EntityState.Added || e.State == EntityState.Modified));
 
             foreach (var entry in entries)
             {
-                var entity = (Category)entry.Entity;
-
-                if (entry.State == EntityState.Added)
+                if (entry.Entity is Category category)
                 {
-                    entity.CreatedAt = DateTime.UtcNow;
+                    if (entry.State == EntityState.Added)
+                    {
+                        category.CreatedAt = DateTime.UtcNow;
+                    }
+                    category.UpdatedAt = DateTime.UtcNow;
                 }
 
-                entity.UpdatedAt = DateTime.UtcNow;
+                if (entry.Entity is Domain.Models.Product product)
+                {
+                    if (entry.State == EntityState.Added)
+                    {
+                        product.CreatedAt = DateTime.UtcNow;
+                    }
+                    product.UpdatedAt = DateTime.UtcNow;
+                }
             }
 
             return await base.SaveChangesAsync(cancellationToken);
         }
+
     }
 }
