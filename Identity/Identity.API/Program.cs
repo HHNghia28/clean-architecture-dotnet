@@ -20,8 +20,12 @@ using Identity.API.Filters;
 using Identity.API.Middlewares;
 using Identity.Application.Features.Auth.Commands.RegisterUser;
 using Identity.Infrastructure.EmailHandler;
+using Carter;
+using Asp.Versioning;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCarter();
 
 // Add services to the container.
 
@@ -29,6 +33,23 @@ builder.Services.AddControllers(options =>
 {
     options.Filters.Add<ApiResponseAttribute>();
 });
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1);
+    options.ReportApiVersions = true;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ApiVersionReader = ApiVersionReader.Combine(
+        new UrlSegmentApiVersionReader(),
+        new HeaderApiVersionReader("X-Api-Version"));
+})
+.AddMvc()
+.AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'V";
+    options.SubstituteApiVersionInUrl = true;
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opt =>
@@ -134,5 +155,7 @@ app.MapControllers();
 app.UseCors(MyAllowSpecificOrigins);
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+app.MapCarter();
 
 app.Run();
