@@ -33,16 +33,9 @@ If you found this Implementation helpful or used it in your Projects, do give it
 - [x] Response Wrappers
 - [x] Healthchecks
 - [x] Pagination
-- [ ] In-Memory Caching
-- [ ] Redis Caching
-- [ ] In-Memory Database
-- [x] Microsoft Identity with JWT Authentication
-- [x] Role based Authorization
-- [x] Identity Seeding
-- [x] Database Seeding
+- [x] JWT Authentication
 - [x] Custom Exception Handling Middlewares
 - [x] API Versioning
-- [x] Fluent Validation
 - [x] Automapper
 - [x] SMTP / Mailkit / Sendgrid Email Service
 - [x] Complete User Management Module (Register / Generate Token / Forgot Password / Confirmation Mail)
