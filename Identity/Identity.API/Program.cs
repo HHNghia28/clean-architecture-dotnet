@@ -1,12 +1,8 @@
 using Identity.API.Services;
-using Identity.Domain.Interfaces.Handlers;
-using Identity.Domain.Interfaces.Repositories;
 using Identity.Domain.Interfaces.Services;
-using Identity.Domain.Interfaces.UnitOfWork;
 using Identity.Infrastructure.Context;
 using Identity.Infrastructure.Repositories;
 using Identity.Infrastructure.Services;
-using Identity.Infrastructure.UnitOfWork;
 using Identity.Application.Handlers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,17 +10,25 @@ using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Auth.DataAccess.MailHandle;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.OpenApi.Models;
-using Identity.Domain.Interfaces.Context;
+using Identity.Application.Interfaces;
+using Identity.Domain.Settings;
+using Microsoft.AspNetCore.Mvc;
+using Identity.API.Filters;
+using Identity.API.Middlewares;
+using Identity.Application.Features.Auth.Commands.RegisterUser;
+using Identity.Infrastructure.EmailHandler;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ApiResponseAttribute>();
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opt =>
@@ -69,9 +73,7 @@ builder.Services.AddMediatR(options =>
 
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
@@ -95,6 +97,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                      });
+});
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -110,5 +130,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors(MyAllowSpecificOrigins);
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.Run();

@@ -1,0 +1,36 @@
+﻿using Identity.Application.Handlers;
+using Identity.Application.Interfaces;
+using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Identity.Application.Features.Auth.Commands.ChangePassword
+{
+    public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand>
+    {
+        private readonly IUserRepository _userRepository;
+        private readonly IPasswordHasher _passwordHasher;
+
+        public ChangePasswordCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher)
+        {
+            _userRepository = userRepository;
+            _passwordHasher = passwordHasher;
+        }
+
+        public async Task Handle(ChangePasswordCommand command, CancellationToken cancellationToken)
+        {
+            var user = await _userRepository.GetByEmailAsync(command.Email);
+
+            if (user == null || !_passwordHasher.VerifyPassword(command.OldPassword, user.PasswordHash)) throw new Exception("Invalid credentials");
+
+            if (!user.IsEmailConfirmed) throw new Exception("Please confirm email");
+
+            await _userRepository.ChangePassword(user.Id, _passwordHasher.HashPassword(command.NewPassword));
+
+            await _userRepository.SaveAsync();
+        }
+    }
+}

@@ -1,5 +1,6 @@
-﻿using Identity.Application.Commands;
-using Identity.Application.Queries;
+﻿using Identity.Application.Features.Users.Commands.UpdateAccount;
+using Identity.Application.Features.Users.Queries.GetUser;
+using Identity.Application.Features.Users.Queries.GetUsers;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace Identity.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetListUserQuery request)
+        public async Task<IActionResult> Get([FromQuery] GetUsersQuery request)
         {
             return Ok(await _mediator.Send(request));
         }

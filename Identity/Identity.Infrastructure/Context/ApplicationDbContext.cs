@@ -1,4 +1,4 @@
-﻿using Identity.Domain.Models;
+﻿using Identity.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -43,7 +43,7 @@ namespace Identity.Infrastructure.Context
                         PasswordHash = BCrypt.Net.BCrypt.HashPassword("aA@123"),
                         FullName = "admin",
                         IsEmailConfirmed = true,
-                        RoleId = 1 
+                        RoleId = 1
                     },
                     new User()
                     {

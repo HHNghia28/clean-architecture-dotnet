@@ -1,4 +1,12 @@
-﻿using Identity.Application.Commands;
+﻿using Identity.Application.Features.Auth.Commands.AccessToken;
+using Identity.Application.Features.Auth.Commands.ChangeDeleteUser;
+using Identity.Application.Features.Auth.Commands.ChangePassword;
+using Identity.Application.Features.Auth.Commands.ConfirmEmail;
+using Identity.Application.Features.Auth.Commands.ForgotPassword;
+using Identity.Application.Features.Auth.Commands.LoginUser;
+using Identity.Application.Features.Auth.Commands.RegisterUser;
+using Identity.Application.Features.Auth.Commands.ResendEmail;
+using Identity.Application.Features.Auth.Commands.ResetPassword;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -136,7 +144,7 @@ namespace Identity.API.Controllers
         {
             try
             {
-                ChangeIsDeletedUserCommand command = new()
+                ChangeDeletedUserCommand command = new()
                 {
                     IsDeleted = true,
                     UserId = id
@@ -156,7 +164,7 @@ namespace Identity.API.Controllers
         {
             try
             {
-                ChangeIsDeletedUserCommand command = new()
+                ChangeDeletedUserCommand command = new()
                 {
                     IsDeleted = false,
                     UserId = id

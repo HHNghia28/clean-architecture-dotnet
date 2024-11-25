@@ -1,4 +1,4 @@
-﻿using Identity.Domain.Interfaces.Context;
+﻿using Identity.Application.Interfaces;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Npgsql;

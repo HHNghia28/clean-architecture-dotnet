@@ -1,7 +1,12 @@
-﻿using Identity.Domain;
-using Identity.Domain.Interfaces.Repositories;
-using Identity.Domain.Models;
+﻿using Dapper;
+using Identity.Application.DTO;
+using Identity.Application.Exceptions;
+using Identity.Application.Interfaces;
+using Identity.Application.Wrappers;
+using Identity.Domain;
+using Identity.Domain.Entities;
 using Identity.Infrastructure.Context;
+using Identity.Infrastructure.Shares;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,10 +19,12 @@ namespace Identity.Infrastructure.Repositories
     public class UserRepository : Repository<User>, IUserRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly ISqlConnectionFactory _connectionFactory;
 
-        public UserRepository(ApplicationDbContext context) : base(context)
+        public UserRepository(ApplicationDbContext context, ISqlConnectionFactory connectionFactory) : base(context)
         {
             _context = context;
+            _connectionFactory = connectionFactory;
         }
 
         public async Task<bool> ChangePassword(Guid userId, string newHashPassword)
@@ -122,6 +129,71 @@ namespace Identity.Infrastructure.Repositories
             user.IsDeleted = isDeleted;
 
             return true;
+        }
+
+        public async Task<PagedResponse<List<UserListResponse>>> GetUsers(PagingRequest request)
+        {
+            using (var connection = _connectionFactory.GetOpenConnection())
+            {
+                const string sqlUsers = @"
+                    SELECT 
+                        ""Users"".""Id"",
+                        ""Users"".""FullName"",
+                        ""Users"".""Email"",
+                        ""Roles"".""Name"" AS ""Role""
+                    FROM ""Users""
+                    INNER JOIN ""Roles"" ON ""Users"".""RoleId"" = ""Roles"".""Id""
+                    WHERE ""Users"".""IsDeleted"" = false
+                    ORDER BY ""Users"".""FullName""
+                    OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY";
+
+                var offset = (request.PageNumber - 1) * request.PageSize;
+                var users = await connection.QueryAsync<UserListResponse>(sqlUsers, new { Offset = offset, PageSize = request.PageSize });
+
+                const string sqlCount = @"
+                    SELECT COUNT(*)
+                    FROM ""Users""
+                    INNER JOIN ""Roles"" ON ""Users"".""RoleId"" = ""Roles"".""Id""";
+
+                var totalRecords = await connection.ExecuteScalarAsync<int>(sqlCount);
+
+                var response = new PagedResponse<List<UserListResponse>>(
+                    users.AsList(),
+                    request.PageNumber,
+                    request.PageSize,
+                    (int)Math.Ceiling((double)totalRecords / request.PageSize)
+                );
+
+                return response;
+            }
+        }
+
+        public async Task<UserResponse> GetUser(Guid id)
+        {
+            using (var connection = _connectionFactory.GetOpenConnection())
+            {
+                const string sqlUsers = @"
+                    SELECT 
+                        ""Users"".""Id"",
+                        ""Users"".""FullName"",
+                        ""Users"".""Email"",
+                        ""Users"".""IsEmailConfirmed"",
+                        ""Users"".""IsDeleted"",
+                        ""Users"".""RoleId"",
+                        ""Roles"".""Name"" AS ""Role""
+                    FROM ""Users""
+                    INNER JOIN ""Roles"" ON ""Users"".""RoleId"" = ""Roles"".""Id""
+                    WHERE ""Users"".""Id"" = @Id";
+
+                var user = await connection.QueryFirstOrDefaultAsync<UserResponse>(sqlUsers, new { Id = id });
+
+                if (user == null)
+                {
+                    throw new NotFoundException("User not found");
+                }
+
+                return user;
+            }
         }
     }
 }

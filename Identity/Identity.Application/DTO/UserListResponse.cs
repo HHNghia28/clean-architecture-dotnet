@@ -1,4 +1,4 @@
-﻿using Identity.Domain.Models;
+﻿using Identity.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

@@ -1,4 +1,4 @@
-﻿using Identity.Domain.Interfaces.Repositories;
+﻿using Identity.Application.Interfaces;
 using Identity.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using System;

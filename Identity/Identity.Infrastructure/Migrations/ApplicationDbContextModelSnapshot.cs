@@ -22,7 +22,7 @@ namespace Identity.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Identity.Domain.Models.EmailConfirmationToken", b =>
+            modelBuilder.Entity("Identity.Domain.Entities.EmailConfirmationToken", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,7 +46,7 @@ namespace Identity.Infrastructure.Migrations
                     b.ToTable("EmailConfirmationTokens");
                 });
 
-            modelBuilder.Entity("Identity.Domain.Models.RefreshToken", b =>
+            modelBuilder.Entity("Identity.Domain.Entities.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,7 +70,7 @@ namespace Identity.Infrastructure.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("Identity.Domain.Models.Role", b =>
+            modelBuilder.Entity("Identity.Domain.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -105,11 +105,14 @@ namespace Identity.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Identity.Domain.Models.User", b =>
+            modelBuilder.Entity("Identity.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -126,6 +129,9 @@ namespace Identity.Infrastructure.Migrations
 
                     b.Property<bool>("IsEmailConfirmed")
                         .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LastModifiedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -144,39 +150,45 @@ namespace Identity.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
+                            Id = new Guid("be5d078f-b1b6-4945-bdc8-52acc1de1416"),
+                            CreatedAt = new DateTime(2024, 11, 25, 8, 15, 9, 612, DateTimeKind.Utc).AddTicks(1010),
                             Email = "admin@gmail.com",
                             FullName = "admin",
                             IsDeleted = false,
                             IsEmailConfirmed = true,
-                            PasswordHash = "$2a$11$M9B2kD7iMOaMHPFOUi5v4eXfS9iLlGvVjWTryiHnsotpG8hAPTVM2",
+                            LastModifiedAt = new DateTime(2024, 11, 25, 8, 15, 9, 612, DateTimeKind.Utc).AddTicks(1023),
+                            PasswordHash = "$2a$11$aUwagqrB//R/Ku7h5yjFou9utBFa1jOYcUBPeyQbM8tsqWbFjr0TO",
                             RoleId = 1
                         },
                         new
                         {
-                            Id = new Guid("1f078b3f-8bd3-4e6b-a8b4-ae56c7a729d2"),
+                            Id = new Guid("1218f87f-eab3-4e94-bd54-d0c3b38491b1"),
+                            CreatedAt = new DateTime(2024, 11, 25, 8, 15, 9, 796, DateTimeKind.Utc).AddTicks(6494),
                             Email = "staff@gmail.com",
                             FullName = "staff",
                             IsDeleted = false,
                             IsEmailConfirmed = true,
-                            PasswordHash = "$2a$11$lqrpEO4dBnQBZ59sfBHZlu3lHpafWY2xxUO0tTgJFTPT8D0LHYBae",
+                            LastModifiedAt = new DateTime(2024, 11, 25, 8, 15, 9, 796, DateTimeKind.Utc).AddTicks(6497),
+                            PasswordHash = "$2a$11$Xyrc0YTgLwh24oKk88gz5.v8E2p9ez7T928ad5ViUV7ga76o3mZw.",
                             RoleId = 2
                         },
                         new
                         {
-                            Id = new Guid("16f3c2f6-d90c-4178-8778-afbdcbee94b5"),
+                            Id = new Guid("47f55a0c-6cd1-4173-a4b9-4c80fca90a31"),
+                            CreatedAt = new DateTime(2024, 11, 25, 8, 15, 9, 980, DateTimeKind.Utc).AddTicks(9377),
                             Email = "user@gmail.com",
                             FullName = "user",
                             IsDeleted = false,
                             IsEmailConfirmed = true,
-                            PasswordHash = "$2a$11$3XoBfbQAqbpU5LeNWq.3muPlZSMsbFORKFN5eH3vr4UZPBbFNq6RC",
+                            LastModifiedAt = new DateTime(2024, 11, 25, 8, 15, 9, 980, DateTimeKind.Utc).AddTicks(9379),
+                            PasswordHash = "$2a$11$ob1eZXPISr0qQEHIWyMUzuu8UeZ5QMRY7eCgscY0bhp4HNtyYdoXu",
                             RoleId = 3
                         });
                 });
 
-            modelBuilder.Entity("Identity.Domain.Models.EmailConfirmationToken", b =>
+            modelBuilder.Entity("Identity.Domain.Entities.EmailConfirmationToken", b =>
                 {
-                    b.HasOne("Identity.Domain.Models.User", "User")
+                    b.HasOne("Identity.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -185,9 +197,9 @@ namespace Identity.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Identity.Domain.Models.RefreshToken", b =>
+            modelBuilder.Entity("Identity.Domain.Entities.RefreshToken", b =>
                 {
-                    b.HasOne("Identity.Domain.Models.User", "User")
+                    b.HasOne("Identity.Domain.Entities.User", "User")
                         .WithMany("RefreshTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -196,9 +208,9 @@ namespace Identity.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Identity.Domain.Models.User", b =>
+            modelBuilder.Entity("Identity.Domain.Entities.User", b =>
                 {
-                    b.HasOne("Identity.Domain.Models.Role", "Role")
+                    b.HasOne("Identity.Domain.Entities.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -207,7 +219,7 @@ namespace Identity.Infrastructure.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Identity.Domain.Models.User", b =>
+            modelBuilder.Entity("Identity.Domain.Entities.User", b =>
                 {
                     b.Navigation("RefreshTokens");
                 });

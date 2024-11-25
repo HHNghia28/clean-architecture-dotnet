@@ -1,5 +1,5 @@
-﻿using Identity.Domain.Interfaces.Services;
-using Identity.Domain.Models;
+﻿using Identity.Application.Interfaces;
+using Identity.Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
