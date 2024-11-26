@@ -5,16 +5,16 @@ using Identity.Application.Features.Users.Queries.GetUsers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Identity.API.Endpoints.Users
+namespace Identity.API.Endpoints.V1.Users
 {
-    public class UserCarterAPI : ICarterModule
+    public class UserCarterApiV1 : ICarterModule
     {
-        private const string BaseUrl = "api/minimal/v{version:apiVersion}/products";
+        private const string BaseUrl = "api/v{version:apiVersion}/users";
 
         public void AddRoutes(IEndpointRouteBuilder app)
         {
             var group1 = app.NewVersionedApi("user-carter-name-show-on-swagger")
-                .MapGroup(BaseUrl) 
+                .MapGroup(BaseUrl)
                 .HasApiVersion(1);
 
             group1.MapGet(string.Empty, GetAll);
@@ -22,17 +22,15 @@ namespace Identity.API.Endpoints.Users
             group1.MapPut(string.Empty, Update);
         }
 
-        public async Task<IResult> GetAll(ISender sender, [FromQuery] GetUsersQuery request)
+        public async Task<IResult> GetAll(ISender sender, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
+            var request = new GetUsersQuery { PageNumber = pageNumber, PageSize = pageSize };
             return Results.Ok(await sender.Send(request));
         }
 
         public async Task<IResult> Get(ISender sender, Guid id)
         {
-            return Results.Ok(await sender.Send(new GetUserQuery
-            {
-                Id = id
-            }));
+            return Results.Ok(await sender.Send(new GetUserQuery { Id = id }));
         }
 
         public async Task<IResult> Update(ISender sender, [FromBody] UpdateUserCommand request)
