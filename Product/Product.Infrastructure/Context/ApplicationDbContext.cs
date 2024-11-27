@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Product.Domain.Models;
+using Product.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace Product.Infrastructure.Context
         }
 
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Domain.Models.Product> Products { get; set; }
+        public DbSet<Domain.Entities.Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,15 +23,15 @@ namespace Product.Infrastructure.Context
 
             modelBuilder.Entity<Category>()
                 .HasData(
-                    new Category { Id = 1, Name = "Coffee", CreatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"), UpdatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207") },
-                    new Category { Id = 2, Name = "Tea", CreatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"), UpdatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207") },
-                    new Category { Id = 3, Name = "Banh Mi", CreatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"), UpdatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207") },
-                    new Category { Id = 4, Name = "Other", CreatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"), UpdatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207") }
+                    new Category { Id = 1, Name = "Coffee", CreatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"), LastModifiedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207") },
+                    new Category { Id = 2, Name = "Tea", CreatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"), LastModifiedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207") },
+                    new Category { Id = 3, Name = "Banh Mi", CreatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"), LastModifiedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207") },
+                    new Category { Id = 4, Name = "Other", CreatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"), LastModifiedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207") }
                 );
 
-            modelBuilder.Entity<Domain.Models.Product>()
+            modelBuilder.Entity<Domain.Entities.Product>()
                 .HasData(
-                    new Domain.Models.Product
+                    new Domain.Entities.Product
                     {
                         Id = Guid.NewGuid(),
                         Name = "PhinDi Cassia",
@@ -41,9 +41,9 @@ namespace Product.Infrastructure.Context
                         Price = 55000,
                         Discount = 0,
                         CreatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
-                        UpdatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
+                        LastModifiedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
                     },
-                    new Domain.Models.Product
+                    new Domain.Entities.Product
                     {
                         Id = Guid.NewGuid(),
                         Name = "Phindi Hạt Dẻ Cười",
@@ -53,9 +53,9 @@ namespace Product.Infrastructure.Context
                         Price = 65000,
                         Discount = 5,
                         CreatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
-                        UpdatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
+                        LastModifiedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
                     },
-                    new Domain.Models.Product
+                    new Domain.Entities.Product
                     {
                         Id = Guid.NewGuid(),
                         Name = "PhinDi Choco",
@@ -65,9 +65,9 @@ namespace Product.Infrastructure.Context
                         Price = 45000,
                         Discount = 0,
                         CreatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
-                        UpdatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
+                        LastModifiedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
                     },
-                    new Domain.Models.Product
+                    new Domain.Entities.Product
                     {
                         Id = Guid.NewGuid(),
                         Name = "Golden Lotus Tea (Only Lotus seed)",
@@ -77,9 +77,9 @@ namespace Product.Infrastructure.Context
                         Price = 45000,
                         Discount = 0,
                         CreatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
-                        UpdatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
+                        LastModifiedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
                     },
-                    new Domain.Models.Product
+                    new Domain.Entities.Product
                     {
                         Id = Guid.NewGuid(),
                         Name = "Peach Jelly Tea",
@@ -89,9 +89,9 @@ namespace Product.Infrastructure.Context
                         Price = 45000,
                         Discount = 10,
                         CreatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
-                        UpdatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
+                        LastModifiedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
                     },
-                    new Domain.Models.Product
+                    new Domain.Entities.Product
                     {
                         Id = Guid.NewGuid(),
                         Name = "Bánh Mì Que (Gà Phô Mai)",
@@ -101,9 +101,9 @@ namespace Product.Infrastructure.Context
                         Price = 19000,
                         Discount = 0,
                         CreatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
-                        UpdatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
+                        LastModifiedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
                     },
-                    new Domain.Models.Product
+                    new Domain.Entities.Product
                     {
                         Id = Guid.NewGuid(),
                         Name = "Bánh Mì Que (Pate)",
@@ -113,9 +113,9 @@ namespace Product.Infrastructure.Context
                         Price = 19000,
                         Discount = 0,
                         CreatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
-                        UpdatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
+                        LastModifiedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
                     },
-                    new Domain.Models.Product
+                    new Domain.Entities.Product
                     {
                         Id = Guid.NewGuid(),
                         Name = "BÁNH TRUNG THU - BÒ XỐT VANG - HIGHLANDS COFFEE",
@@ -125,7 +125,7 @@ namespace Product.Infrastructure.Context
                         Price = 109000,
                         Discount = 3,
                         CreatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
-                        UpdatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
+                        LastModifiedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
                     }
                 );
         }
@@ -135,7 +135,7 @@ namespace Product.Infrastructure.Context
             var entries = ChangeTracker
                 .Entries()
                 .Where(e =>
-                    (e.Entity is Category || e.Entity is Domain.Models.Product) &&
+                    (e.Entity is Category || e.Entity is Domain.Entities.Product) &&
                     (e.State == EntityState.Added || e.State == EntityState.Modified));
 
             foreach (var entry in entries)
@@ -146,16 +146,16 @@ namespace Product.Infrastructure.Context
                     {
                         category.CreatedAt = DateTime.UtcNow;
                     }
-                    category.UpdatedAt = DateTime.UtcNow;
+                    category.LastModifiedAt = DateTime.UtcNow;
                 }
 
-                if (entry.Entity is Domain.Models.Product product)
+                if (entry.Entity is Domain.Entities.Product product)
                 {
                     if (entry.State == EntityState.Added)
                     {
                         product.CreatedAt = DateTime.UtcNow;
                     }
-                    product.UpdatedAt = DateTime.UtcNow;
+                    product.LastModifiedAt = DateTime.UtcNow;
                 }
             }
 
@@ -167,7 +167,7 @@ namespace Product.Infrastructure.Context
             var entries = ChangeTracker
                 .Entries()
                 .Where(e =>
-                    (e.Entity is Category || e.Entity is Domain.Models.Product) &&
+                    (e.Entity is Category || e.Entity is Domain.Entities.Product) &&
                     (e.State == EntityState.Added || e.State == EntityState.Modified));
 
             foreach (var entry in entries)
@@ -178,16 +178,16 @@ namespace Product.Infrastructure.Context
                     {
                         category.CreatedAt = DateTime.UtcNow;
                     }
-                    category.UpdatedAt = DateTime.UtcNow;
+                    category.LastModifiedAt = DateTime.UtcNow;
                 }
 
-                if (entry.Entity is Domain.Models.Product product)
+                if (entry.Entity is Domain.Entities.Product product)
                 {
                     if (entry.State == EntityState.Added)
                     {
                         product.CreatedAt = DateTime.UtcNow;
                     }
-                    product.UpdatedAt = DateTime.UtcNow;
+                    product.LastModifiedAt = DateTime.UtcNow;
                 }
             }
 

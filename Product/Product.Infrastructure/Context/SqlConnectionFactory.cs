@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Npgsql;
-using Product.Domain.Interfaces.Context;
 using System;
 using System.Collections.Generic;
 using System.Data;

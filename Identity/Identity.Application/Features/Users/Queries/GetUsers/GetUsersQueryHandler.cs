@@ -22,7 +22,7 @@ namespace Identity.Application.Features.Users.Queries.GetUsers
 
         public async Task<PagedResponse<List<UserListResponse>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
-            return await _userRepository.GetUsers(new PagingRequest
+            return await _userRepository.GetUsers(new PagedRequest
             {
                 PageNumber = request.PageNumber,
                 PageSize = request.PageSize,

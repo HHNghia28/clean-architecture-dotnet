@@ -1,6 +1,5 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-using Product.Domain.Interfaces.Services;
 
 namespace Product.API.Services
 {

@@ -131,7 +131,7 @@ namespace Identity.Infrastructure.Repositories
             return true;
         }
 
-        public async Task<PagedResponse<List<UserListResponse>>> GetUsers(PagingRequest request)
+        public async Task<PagedResponse<List<UserListResponse>>> GetUsers(PagedRequest request)
         {
             using (var connection = _connectionFactory.GetOpenConnection())
             {

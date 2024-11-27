@@ -12,7 +12,7 @@ namespace Identity.Application.Interfaces
     public interface IUserRepository : IRepository<User>
     {
         Task<UserResponse> GetUser(Guid id);
-        Task<PagedResponse<List<UserListResponse>>> GetUsers(PagingRequest request);
+        Task<PagedResponse<List<UserListResponse>>> GetUsers(PagedRequest request);
         Task<User> GetByEmailAsync(string email);
         Task<string> GenerateCodeConfirmEmail(Guid userId);
         Task<bool> ConfirmEmail(Guid userId);

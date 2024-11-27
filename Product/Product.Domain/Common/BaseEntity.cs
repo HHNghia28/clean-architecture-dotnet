@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Product.Domain.Common
+namespace Identity.Domain.Common
 {
     public abstract class BaseEntity<T>
     {
