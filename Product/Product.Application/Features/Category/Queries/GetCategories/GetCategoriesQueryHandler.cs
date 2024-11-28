@@ -12,9 +12,11 @@ namespace Product.Application.Features.Category.Queries.GetCategories
 {
     public class GetCategoriesQueryHandler(ICategoryRepository categoryRepository) : IRequestHandler<GetCategoriesQuery, List<CategoryResponse>>
     {
+        private readonly ICategoryRepository _categoryRepository = categoryRepository;
+
         public async Task<List<CategoryResponse>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
         {
-            return await categoryRepository.GetCategories();
+            return await _categoryRepository.GetCategories();
         }
     }
 }

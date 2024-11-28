@@ -13,9 +13,11 @@ namespace Product.Application.Features.Product.Queries.GetProduct
 {
     public class GetProductQueryHandler(IProductRepository productRepository) : IRequestHandler<GetProductQuery, ProductResponse>
     {
+        private readonly IProductRepository _productRepository = productRepository;
+
         public async Task<ProductResponse> Handle(GetProductQuery request, CancellationToken cancellationToken)
         {
-            var product = await productRepository.GetProduct(request.Id);
+            var product = await _productRepository.GetProduct(request.Id);
 
             return product ?? throw new NotFoundException("Product not found");
         }

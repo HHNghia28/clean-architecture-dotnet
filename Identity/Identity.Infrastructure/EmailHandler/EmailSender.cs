@@ -12,14 +12,9 @@ using System.Threading.Tasks;
 
 namespace Identity.Infrastructure.EmailHandler
 {
-    public class EmailSender : IEmailSender
+    public class EmailSender(IOptions<MailSettings> _mailSettings) : IEmailSender
     {
-        private readonly MailSettings mailSettings;
-
-        public EmailSender(IOptions<MailSettings> _mailSettings)
-        {
-            mailSettings = _mailSettings.Value;
-        }
+        private readonly MailSettings mailSettings = _mailSettings.Value;
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {

@@ -11,14 +11,9 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.Features.Users.Queries.GetUsers
 {
-    public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PagedResponse<List<UserListResponse>>>
+    public class GetUsersQueryHandler(IUserRepository userRepository) : IRequestHandler<GetUsersQuery, PagedResponse<List<UserListResponse>>>
     {
-        private readonly IUserRepository _userRepository;
-
-        public GetUsersQueryHandler(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
+        private readonly IUserRepository _userRepository = userRepository;
 
         public async Task<PagedResponse<List<UserListResponse>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {

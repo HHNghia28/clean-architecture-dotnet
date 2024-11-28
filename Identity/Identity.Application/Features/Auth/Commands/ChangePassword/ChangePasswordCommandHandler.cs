@@ -10,16 +10,10 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.Features.Auth.Commands.ChangePassword
 {
-    public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand>
+    public class ChangePasswordCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher) : IRequestHandler<ChangePasswordCommand>
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IPasswordHasher _passwordHasher;
-
-        public ChangePasswordCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher)
-        {
-            _userRepository = userRepository;
-            _passwordHasher = passwordHasher;
-        }
+        private readonly IUserRepository _userRepository = userRepository;
+        private readonly IPasswordHasher _passwordHasher = passwordHasher;
 
         public async Task Handle(ChangePasswordCommand command, CancellationToken cancellationToken)
         {

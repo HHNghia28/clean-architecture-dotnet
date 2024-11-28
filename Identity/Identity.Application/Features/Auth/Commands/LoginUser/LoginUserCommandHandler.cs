@@ -11,18 +11,11 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.Features.Auth.Commands.LoginUser
 {
-    public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginResponse>
+    public class LoginUserCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, ITokenService tokenService) : IRequestHandler<LoginUserCommand, LoginResponse>
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IPasswordHasher _passwordHasher;
-        private readonly ITokenService _tokenService;
-
-        public LoginUserCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, ITokenService tokenService)
-        {
-            _userRepository = userRepository;
-            _passwordHasher = passwordHasher;
-            _tokenService = tokenService;
-        }
+        private readonly IUserRepository _userRepository = userRepository;
+        private readonly IPasswordHasher _passwordHasher = passwordHasher;
+        private readonly ITokenService _tokenService = tokenService;
 
         public async Task<LoginResponse> Handle(LoginUserCommand command, CancellationToken cancellationToken)
         {

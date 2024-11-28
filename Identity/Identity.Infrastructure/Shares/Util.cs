@@ -8,7 +8,7 @@ namespace Identity.Infrastructure.Shares
 {
     public static class Util
     {
-        private static readonly Random random = new Random();
+        private static readonly Random random = new();
 
         public static string Generate6DigitCode()
         {

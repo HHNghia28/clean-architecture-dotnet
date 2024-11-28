@@ -16,16 +16,10 @@ using System.Threading.Tasks;
 
 namespace Identity.Infrastructure.Repositories
 {
-    public class UserRepository : Repository<User>, IUserRepository
+    public class UserRepository(ApplicationDbContext context, ISqlConnectionFactory connectionFactory) : Repository<User>(context), IUserRepository
     {
-        private readonly ApplicationDbContext _context;
-        private readonly ISqlConnectionFactory _connectionFactory;
-
-        public UserRepository(ApplicationDbContext context, ISqlConnectionFactory connectionFactory) : base(context)
-        {
-            _context = context;
-            _connectionFactory = connectionFactory;
-        }
+        private readonly ApplicationDbContext _context = context;
+        private readonly ISqlConnectionFactory _connectionFactory = connectionFactory;
 
         public async Task<bool> ChangePassword(Guid userId, string newHashPassword)
         {

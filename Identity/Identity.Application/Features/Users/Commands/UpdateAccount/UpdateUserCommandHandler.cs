@@ -9,14 +9,9 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.Features.Users.Commands.UpdateAccount
 {
-    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>
+    public class UpdateUserCommandHandler(IUserRepository userRepository) : IRequestHandler<UpdateUserCommand>
     {
-        private readonly IUserRepository _userRepository;
-
-        public UpdateUserCommandHandler(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
+        private readonly IUserRepository _userRepository = userRepository;
 
         public async Task Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {

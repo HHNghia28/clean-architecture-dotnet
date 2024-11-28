@@ -10,16 +10,10 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.Features.Auth.Commands.AccessToken
 {
-    public class AccessTokenCommandHandler : IRequestHandler<AccessTokenCommand, LoginResponse>
+    public class AccessTokenCommandHandler(IUserRepository userRepository, ITokenService tokenService) : IRequestHandler<AccessTokenCommand, LoginResponse>
     {
-        private readonly IUserRepository _userRepository;
-        private readonly ITokenService _tokenService;
-
-        public AccessTokenCommandHandler(IUserRepository userRepository, ITokenService tokenService)
-        {
-            _userRepository = userRepository;
-            _tokenService = tokenService;
-        }
+        private readonly IUserRepository _userRepository = userRepository;
+        private readonly ITokenService _tokenService = tokenService;
 
         public async Task<LoginResponse> Handle(AccessTokenCommand command, CancellationToken cancellationToken)
         {

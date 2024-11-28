@@ -10,16 +10,18 @@ namespace Product.Application.Features.Category.Commands.CreateCategory
 {
     public class CreateCategoryCommandHandler(ICategoryRepository categoryRepository) : IRequestHandler<CreateCategoryCommand>
     {
+        private readonly ICategoryRepository _categoryRepository = categoryRepository;
+
         public async Task Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
-            await categoryRepository.AddAsync(new Domain.Entities.Category
+            await _categoryRepository.AddAsync(new Domain.Entities.Category
             {
                 Name = request.Name,
                 CreatedBy = request.CreatedBy,
                 LastModifiedBy = request.CreatedBy,
             });
 
-            await categoryRepository.SaveAsync();
+            await _categoryRepository.SaveAsync();
         }
     }
 }

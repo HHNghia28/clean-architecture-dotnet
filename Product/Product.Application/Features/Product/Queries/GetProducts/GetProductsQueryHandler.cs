@@ -13,9 +13,11 @@ namespace Product.Application.Features.Product.Queries.GetProducts
 {
     public class GetProductsQueryHandler(IProductRepository productRepository) : IRequestHandler<GetProductsQuery, PagedResponse<List<ProductsResponse>>>
     {
+        private readonly IProductRepository _productRepository = productRepository;
+
         public async Task<PagedResponse<List<ProductsResponse>>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            return await productRepository.GetProducts(new PagedRequest { PageNumber = request.PageNumber, PageSize = request.PageSize });
+            return await _productRepository.GetProducts(new PagedRequest { PageNumber = request.PageNumber, PageSize = request.PageSize });
         }
     }
 }

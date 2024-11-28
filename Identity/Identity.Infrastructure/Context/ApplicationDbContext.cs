@@ -8,12 +8,8 @@ using System.Threading.Tasks;
 
 namespace Identity.Infrastructure.Context
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options)
-        {
-        }
-
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<EmailConfirmationToken> EmailConfirmationTokens { get; set; }

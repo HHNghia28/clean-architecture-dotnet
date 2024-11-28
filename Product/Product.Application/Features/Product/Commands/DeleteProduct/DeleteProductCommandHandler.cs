@@ -11,15 +11,17 @@ namespace Product.Application.Features.Product.Commands.DeleteProduct
 {
     public class DeleteProductCommandHandler(IProductRepository productRepository) : IRequestHandler<DeleteProductCommand>
     {
+        private readonly IProductRepository _productRepository = productRepository;
+
         public async Task Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
-            var product = await productRepository.GetByIdAsync(request.Id) ?? throw new NotFoundException("Product not found");
+            var product = await _productRepository.GetByIdAsync(request.Id) ?? throw new NotFoundException("Product not found");
 
             product.LastModifiedBy = request.LastModifiedBy;
             product.IsDeleted = true;
 
-            await productRepository.UpdateAsync(product);
-            await productRepository.SaveAsync();
+            await _productRepository.UpdateAsync(product);
+            await _productRepository.SaveAsync();
         }
     }
 }

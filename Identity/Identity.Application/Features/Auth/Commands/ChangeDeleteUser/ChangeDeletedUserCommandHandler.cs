@@ -8,14 +8,9 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.Features.Auth.Commands.ChangeDeleteUser
 {
-    public class ChangeDeletedUserCommandHandler : IRequestHandler<ChangeDeletedUserCommand>
+    public class ChangeDeletedUserCommandHandler(IUserRepository userRepository) : IRequestHandler<ChangeDeletedUserCommand>
     {
-        private readonly IUserRepository _userRepository;
-
-        public ChangeDeletedUserCommandHandler(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
+        private readonly IUserRepository _userRepository = userRepository;
 
         public async Task Handle(ChangeDeletedUserCommand request, CancellationToken cancellationToken)
         {

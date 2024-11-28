@@ -12,18 +12,11 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.Features.Auth.Commands.ForgotPassword
 {
-    public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand>
+    public class ForgotPasswordCommandHandler(IUserRepository userRepository, IEmailSender emailSender, IConfiguration configuration) : IRequestHandler<ForgotPasswordCommand>
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IEmailSender _emailSender;
-        private readonly IConfiguration _configuration;
-
-        public ForgotPasswordCommandHandler(IUserRepository userRepository, IEmailSender emailSender, IConfiguration configuration)
-        {
-            _userRepository = userRepository;
-            _emailSender = emailSender;
-            _configuration = configuration;
-        }
+        private readonly IUserRepository _userRepository = userRepository;
+        private readonly IEmailSender _emailSender = emailSender;
+        private readonly IConfiguration _configuration = configuration;
 
         public async Task Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
         {

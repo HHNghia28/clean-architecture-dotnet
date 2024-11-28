@@ -10,9 +10,11 @@ namespace Product.Application.Features.Product.Commands.CreateProduct
 {
     public class CreateProductCommandHandler(IProductRepository productRepository) : IRequestHandler<CreateProductCommand>
     {
+        private readonly IProductRepository _productRepository = productRepository;
+
         public async Task Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-            await productRepository.AddAsync(new Domain.Entities.Product
+            await _productRepository.AddAsync(new Domain.Entities.Product
             {
                 Name = request.Name,
                 Description = request.Description,
@@ -24,7 +26,7 @@ namespace Product.Application.Features.Product.Commands.CreateProduct
                 CategoryId = request.CategoryId,
             });
 
-            await productRepository.SaveAsync();
+            await _productRepository.SaveAsync();
         }
     }
 }

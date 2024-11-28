@@ -10,14 +10,9 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.Features.Users.Queries.GetUser
 {
-    public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserResponse>
+    public class GetUserQueryHandler(IUserRepository userRepository) : IRequestHandler<GetUserQuery, UserResponse>
     {
-        private readonly IUserRepository _userRepository;
-
-        public GetUserQueryHandler(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
+        private readonly IUserRepository _userRepository = userRepository;
 
         public async Task<UserResponse> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {

@@ -6,6 +6,8 @@ namespace Product.API.Middlewares
 {
     public class ApiResponseMiddleware(RequestDelegate next)
     {
+        private readonly RequestDelegate _next = next;
+
         public async Task InvokeAsync(HttpContext context)
         {
             var originalBodyStream = context.Response.Body;
@@ -14,7 +16,7 @@ namespace Product.API.Middlewares
 
             try
             {
-                await next(context);
+                await _next(context);
 
                 context.Response.Body = originalBodyStream;
 

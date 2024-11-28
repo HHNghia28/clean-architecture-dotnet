@@ -13,9 +13,11 @@ namespace Product.Infrastructure.Repositories
 {
     public class CategoryRepository(ApplicationDbContext context, ISqlConnectionFactory sqlConnectionFactory) : Repository<Category>(context), ICategoryRepository
     {
+        private readonly ISqlConnectionFactory _sqlConnectionFactory = sqlConnectionFactory;
+
         public async Task<List<CategoryResponse>> GetCategories()
         {
-            var connection = sqlConnectionFactory.GetOpenConnection();
+            var connection = _sqlConnectionFactory.GetOpenConnection();
             const string categoriesQuery = @"
                     SELECT
                         ""Categories"".""Id"",

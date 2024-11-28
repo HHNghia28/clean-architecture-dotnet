@@ -14,9 +14,11 @@ namespace Product.Infrastructure.Repositories
 {
     public class ProductRepository(ApplicationDbContext context, ISqlConnectionFactory sqlConnectionFactory) : Repository<Domain.Entities.Product>(context), IProductRepository
     {
+        private readonly ISqlConnectionFactory _sqlConnectionFactory = sqlConnectionFactory;
+
         public async Task<ProductResponse> GetProduct(Guid id)
         {
-            using var connect = sqlConnectionFactory.GetOpenConnection();
+            using var connect = _sqlConnectionFactory.GetOpenConnection();
             const string sqlProduct = @"
                     SELECT
                         ""Products"".""Id"",
@@ -45,7 +47,7 @@ namespace Product.Infrastructure.Repositories
 
         public async Task<PagedResponse<List<ProductsResponse>>> GetProducts(PagedRequest request)
         {
-            using var connection = sqlConnectionFactory.GetOpenConnection();
+            using var connection = _sqlConnectionFactory.GetOpenConnection();
             const string sqlProducts = @"
                     SELECT 
                         ""Products"".""Id"",

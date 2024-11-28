@@ -8,12 +8,8 @@ using System.Threading.Tasks;
 
 namespace Product.Infrastructure.Context
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options)
-        {
-        }
-
         public DbSet<Category> Categories { get; set; }
         public DbSet<Domain.Entities.Product> Products { get; set; }
 

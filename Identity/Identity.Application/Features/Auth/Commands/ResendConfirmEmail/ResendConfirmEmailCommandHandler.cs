@@ -11,20 +11,12 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.Features.Auth.Commands.ResendEmail
 {
-    public class ResendConfirmEmailCommandHandler : IRequestHandler<ResendConfirmEmailCommand>
+    public class ResendConfirmEmailCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, IEmailSender emailSender, IConfiguration configuration) : IRequestHandler<ResendConfirmEmailCommand>
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IPasswordHasher _passwordHasher;
-        private readonly IEmailSender _emailSender;
-        private readonly IConfiguration _configuration;
-
-        public ResendConfirmEmailCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, IEmailSender emailSender, IConfiguration configuration)
-        {
-            _userRepository = userRepository;
-            _passwordHasher = passwordHasher;
-            _emailSender = emailSender;
-            _configuration = configuration;
-        }
+        private readonly IUserRepository _userRepository = userRepository;
+        private readonly IPasswordHasher _passwordHasher = passwordHasher;
+        private readonly IEmailSender _emailSender = emailSender;
+        private readonly IConfiguration _configuration = configuration;
 
         async Task IRequestHandler<ResendConfirmEmailCommand>.Handle(ResendConfirmEmailCommand command, CancellationToken cancellationToken)
         {

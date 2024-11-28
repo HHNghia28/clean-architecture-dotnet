@@ -8,14 +8,9 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.Features.Auth.Commands.ConfirmEmail
 {
-    public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, bool>
+    public class ConfirmEmailCommandHandler(IUserRepository userRepository) : IRequestHandler<ConfirmEmailCommand, bool>
     {
-        private readonly IUserRepository _userRepository;
-
-        public ConfirmEmailCommandHandler(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
+        private readonly IUserRepository _userRepository = userRepository;
 
         async Task<bool> IRequestHandler<ConfirmEmailCommand, bool>.Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
         {

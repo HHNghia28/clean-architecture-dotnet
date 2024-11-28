@@ -9,15 +9,10 @@ using System.Threading.Tasks;
 
 namespace Product.Infrastructure.Context
 {
-    public class SqlConnectionFactory : ISqlConnectionFactory, IDisposable
+    public class SqlConnectionFactory(IConfiguration configuration) : ISqlConnectionFactory, IDisposable
     {
-        private readonly string _connectionString;
+        private readonly string _connectionString = configuration.GetConnectionString("DefaultConnection");
         private IDbConnection _connection;
-
-        public SqlConnectionFactory(IConfiguration configuration)
-        {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
-        }
 
         public IDbConnection GetOpenConnection()
         {
