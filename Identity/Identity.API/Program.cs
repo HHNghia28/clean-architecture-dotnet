@@ -158,6 +158,7 @@ app.MapControllers();
 
 app.UseCors(MyAllowSpecificOrigins);
 
+app.UseMiddleware<ApiKeyMiddleware>();
 app.UseMiddleware<ApiResponseMiddleware>();
 
 app.MapCarter();

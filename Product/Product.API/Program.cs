@@ -126,6 +126,7 @@ app.UseAuthentication();
 
 app.UseCors(MyAllowSpecificOrigins);
 
+app.UseMiddleware<ApiKeyMiddleware>();
 app.UseMiddleware<ApiResponseMiddleware>();
 
 app.MapControllers();
