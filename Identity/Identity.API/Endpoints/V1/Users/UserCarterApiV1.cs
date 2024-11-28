@@ -17,9 +17,9 @@ namespace Identity.API.Endpoints.V1.Users
                 .MapGroup(BaseUrl)
                 .HasApiVersion(1);
 
-            group1.MapGet(string.Empty, GetAll);
-            group1.MapGet("{id:guid}", Get);
-            group1.MapPut(string.Empty, Update);
+            group1.MapGet(string.Empty, GetAll).RequireAuthorization("AdminPolicy");
+            group1.MapGet("{id:guid}", Get).RequireAuthorization();
+            group1.MapPut("{id:guid}", Update).RequireAuthorization();
         }
 
         public async Task<IResult> GetAll(ISender sender, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
@@ -33,8 +33,9 @@ namespace Identity.API.Endpoints.V1.Users
             return Results.Ok(await sender.Send(new GetUserQuery { Id = id }));
         }
 
-        public async Task<IResult> Update(ISender sender, [FromBody] UpdateUserCommand request)
+        public async Task<IResult> Update(ISender sender, Guid id, [FromBody] UpdateUserCommand request)
         {
+            request.Id = id;
             await sender.Send(request);
             return Results.Ok("Update user successful");
         }

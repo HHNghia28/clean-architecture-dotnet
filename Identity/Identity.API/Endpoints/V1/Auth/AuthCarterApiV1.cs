@@ -32,8 +32,8 @@ namespace Identity.API.Endpoints.V1.Auth
             group.MapPut("forgot-password", ForgotPassword);
             group.MapPut("reset-password", ResetPassword);
             group.MapPut("access-token", AccessToken);
-            group.MapPut("block", Block);
-            group.MapPut("unblock", UnBlock);
+            group.MapPut("block", Block).RequireAuthorization("AdminPolicy");
+            group.MapPut("unblock", UnBlock).RequireAuthorization("AdminPolicy");
         }
 
         public async Task<IResult> Register(ISender sender, [FromBody] RegisterUserCommand command)

@@ -113,6 +113,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
         };
     });
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("AdminPolicy", policy =>
+        policy.RequireRole("Admin"))
+    .AddPolicy("StaffPolicy", policy =>
+        policy.RequireRole("Staff"))
+    .AddPolicy("UserPolicy", policy =>
+        policy.RequireRole("User"));
+
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
