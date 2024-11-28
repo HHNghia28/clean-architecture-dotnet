@@ -41,6 +41,10 @@ namespace Identity.API.Middlewares
             {
                 await HandleExceptionAsync(context, originalBodyStream, StatusCodes.Status404NotFound, ex.Message);
             }
+            catch (InvalidCredentialsException ex)
+            {
+                await HandleExceptionAsync(context, originalBodyStream, StatusCodes.Status401Unauthorized, ex.Message);
+            }
             catch (ValidationException ex)
             {
                 await HandleExceptionAsync(context, originalBodyStream, StatusCodes.Status400BadRequest, ex.Message);

@@ -1,4 +1,5 @@
 ﻿using Identity.Application.DTO;
+using Identity.Application.Exceptions;
 using Identity.Application.Handlers;
 using Identity.Application.Interfaces;
 using MediatR;
@@ -27,9 +28,9 @@ namespace Identity.Application.Features.Auth.Commands.LoginUser
         {
             var user = await _userRepository.GetByEmailAsync(command.Email);
 
-            if (user == null || !_passwordHasher.VerifyPassword(command.Password, user.PasswordHash)) throw new Exception("Invalid credentials");
+            if (user == null || !_passwordHasher.VerifyPassword(command.Password, user.PasswordHash)) throw new InvalidCredentialsException("Invalid credentials");
 
-            if (!user.IsEmailConfirmed) throw new Exception("Please confirm email");
+            if (!user.IsEmailConfirmed) throw new InvalidCredentialsException("Please confirm email");
 
             var accessToken = _tokenService.GenerateJwtToken(user);
             var refreshToken = _tokenService.GenerateRefreshToken(64);

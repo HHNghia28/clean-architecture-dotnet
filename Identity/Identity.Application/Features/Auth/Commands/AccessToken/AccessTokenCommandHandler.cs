@@ -1,4 +1,5 @@
 ﻿using Identity.Application.DTO;
+using Identity.Application.Exceptions;
 using Identity.Application.Interfaces;
 using MediatR;
 using System;
@@ -24,7 +25,7 @@ namespace Identity.Application.Features.Auth.Commands.AccessToken
         {
             var user = await _userRepository.GetUserByRefreshToken(command.RefreshToken);
 
-            if (user == null) throw new Exception("Invalid refresh token");
+            if (user == null) throw new InvalidCredentialsException("Invalid refresh token");
 
             var accessToken = _tokenService.GenerateJwtToken(user);
 

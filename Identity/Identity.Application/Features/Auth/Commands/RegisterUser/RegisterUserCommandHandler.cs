@@ -1,4 +1,5 @@
-﻿using Identity.Application.Handlers;
+﻿using Identity.Application.Exceptions;
+using Identity.Application.Handlers;
 using Identity.Application.Interfaces;
 using Identity.Domain.Entities;
 using MediatR;
@@ -29,7 +30,7 @@ namespace Identity.Application.Features.Auth.Commands.RegisterUser
         {
             var existingUser = await _userRepository.GetByEmailAsync(command.Email);
 
-            if (existingUser != null) throw new Exception("User already exists");
+            if (existingUser != null) throw new InvalidCredentialsException("User already exists");
 
             Guid userId = Guid.NewGuid();
 

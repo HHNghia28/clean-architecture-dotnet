@@ -1,4 +1,5 @@
-﻿using Identity.Application.Interfaces;
+﻿using Identity.Application.Exceptions;
+using Identity.Application.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -28,7 +29,7 @@ namespace Identity.Application.Features.Auth.Commands.ForgotPassword
         {
             var existingUser = await _userRepository.GetByEmailAsync(request.Email);
 
-            if (existingUser == null) throw new Exception("User not found");
+            if (existingUser == null) throw new NotFoundException("User not found");
 
             string code = await _userRepository.GenerateCodeConfirmEmail(existingUser.Id);
 

@@ -1,4 +1,5 @@
-﻿using Identity.Application.Handlers;
+﻿using Identity.Application.Exceptions;
+using Identity.Application.Handlers;
 using Identity.Application.Interfaces;
 using MediatR;
 using System;
@@ -24,9 +25,9 @@ namespace Identity.Application.Features.Auth.Commands.ChangePassword
         {
             var user = await _userRepository.GetByEmailAsync(command.Email);
 
-            if (user == null || !_passwordHasher.VerifyPassword(command.OldPassword, user.PasswordHash)) throw new Exception("Invalid credentials");
+            if (user == null || !_passwordHasher.VerifyPassword(command.OldPassword, user.PasswordHash)) throw new InvalidCredentialsException("Invalid credentials");
 
-            if (!user.IsEmailConfirmed) throw new Exception("Please confirm email");
+            if (!user.IsEmailConfirmed) throw new InvalidCredentialsException("Please confirm email");
 
             await _userRepository.ChangePassword(user.Id, _passwordHasher.HashPassword(command.NewPassword));
 

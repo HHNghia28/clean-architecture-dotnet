@@ -1,4 +1,5 @@
-﻿using Identity.Application.Handlers;
+﻿using Identity.Application.Exceptions;
+using Identity.Application.Handlers;
 using Identity.Application.Interfaces;
 using Identity.Domain.Entities;
 using MediatR;
@@ -29,7 +30,7 @@ namespace Identity.Application.Features.Auth.Commands.ResendEmail
         {
             var existingUser = await _userRepository.GetByEmailAsync(command.Email);
 
-            if (existingUser == null) throw new Exception("User not found");
+            if (existingUser == null) throw new NotFoundException("User not found");
 
             string code = await _userRepository.GenerateCodeConfirmEmail(existingUser.Id);
 
