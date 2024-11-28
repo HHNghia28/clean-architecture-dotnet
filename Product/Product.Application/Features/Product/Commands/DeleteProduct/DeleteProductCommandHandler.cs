@@ -15,7 +15,7 @@ namespace Product.Application.Features.Product.Commands.DeleteProduct
         {
             var product = await productRepository.GetByIdAsync(request.Id) ?? throw new NotFoundException("Product not found");
 
-            product.LastModifiedBy = request.UpdatedBy;
+            product.LastModifiedBy = request.LastModifiedBy;
             product.IsDeleted = true;
 
             await productRepository.UpdateAsync(product);

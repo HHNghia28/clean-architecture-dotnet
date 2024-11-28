@@ -13,6 +13,7 @@ namespace Product.Application.Features.Category.Commands.UpdateCategory
     {
         [JsonIgnore]
         public int Id { get; set; }
+        [JsonIgnore]
         public Guid LastModifiedBy { get; set; }
         [Required]
         [StringLength(100)]

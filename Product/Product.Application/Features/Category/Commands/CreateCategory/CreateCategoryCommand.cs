@@ -11,7 +11,8 @@ namespace Product.Application.Features.Category.Commands.CreateCategory
 {
     public class CreateCategoryCommand : IRequest
     {
-        public Guid UserId { get; set; }
+        [JsonIgnore]
+        public Guid CreatedBy { get; set; }
         [Required]
         [StringLength(100)]
         public string Name { get; set; }

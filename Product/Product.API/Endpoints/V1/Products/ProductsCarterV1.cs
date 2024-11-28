@@ -44,53 +44,24 @@ namespace Product.API.Endpoints.V1.Products
             return Results.Ok(product);
         }
 
-        public async Task<IResult> Create(ISender sender, [FromBody] CreateProductCommand request)
+        public async Task<IResult> Create(ISender sender, [FromHeader(Name = "X-User-Id")] Guid userId, [FromBody] CreateProductCommand request)
         {
-            try
-            {
-                await sender.Send(request);
-                return Results.Ok("Create product successful");
-            }
-            catch (NotFoundException ex)
-            {
-                return Results.NotFound(ex.Message);
-            }
-            catch (ValidationException ex)
-            {
-                return Results.BadRequest(ex.Message);
-            }
-            catch
-            {
-                return Results.StatusCode(500);
-            }
+            request.CreatedBy = userId;
+            await sender.Send(request);
+            return Results.Ok("Create product successful");
         }
 
-        public async Task<IResult> Update(ISender sender, Guid id, [FromBody] UpdateProductCommand request)
-        {
-            try
-            {
-                request.Id = id;
-                await sender.Send(request);
-                return Results.Ok("Update product successful");
-            }
-            catch (NotFoundException ex)
-            {
-                return Results.NotFound(ex.Message);
-            }
-            catch (ValidationException ex)
-            {
-                return Results.BadRequest(ex.Message);
-            }
-            catch
-            {
-                return Results.StatusCode(500);
-            }
-        }
-
-        public async Task<IResult> Delete(ISender sender, Guid id, [FromBody] DeleteProductCommand request)
+        public async Task<IResult> Update(ISender sender, Guid id, [FromHeader(Name = "X-User-Id")] Guid userId, [FromBody] UpdateProductCommand request)
         {
             request.Id = id;
+            request.LastModifiedBy = userId;
             await sender.Send(request);
+            return Results.Ok("Update product successful");
+        }
+
+        public async Task<IResult> Delete(ISender sender, Guid id, [FromHeader(Name = "X-User-Id")] Guid userId)
+        {
+            await sender.Send(new DeleteProductCommand { Id = id, LastModifiedBy = userId});
             return Results.Ok("Delete product successful");
         }
     }

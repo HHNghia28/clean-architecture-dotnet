@@ -36,23 +36,24 @@ namespace Product.API.Endpoints.V1.Categories
             return Results.Ok(category);
         }
 
-        public async Task<IResult> Create(ISender sender, [FromBody] CreateCategoryCommand command)
+        public async Task<IResult> Create(ISender sender, [FromHeader(Name = "X-User-Id")] Guid userId, [FromBody] CreateCategoryCommand command)
         {
+            command.CreatedBy = userId;
             await sender.Send(command);
             return Results.Ok("Create category successful");
         }
 
-        public async Task<IResult> Update(ISender sender, int id, [FromBody] UpdateCategoryCommand command)
+        public async Task<IResult> Update(ISender sender, int id, [FromHeader(Name = "X-User-Id")] Guid userId, [FromBody] UpdateCategoryCommand command)
         {
             command.Id = id;
+            command.LastModifiedBy = userId;
             await sender.Send(command);
             return Results.Ok("Update category successful");
         }
 
-        public async Task<IResult> Delete(ISender sender, int id, [FromBody] DeleteCategoryCommand command)
+        public async Task<IResult> Delete(ISender sender, int id, [FromHeader(Name = "X-User-Id")] Guid userId)
         {
-            command.Id = id;
-            await sender.Send(command);
+            await sender.Send(new DeleteCategoryCommand { Id = id, UserId = userId});
             return Results.Ok("Delete category successful");
         }
     }

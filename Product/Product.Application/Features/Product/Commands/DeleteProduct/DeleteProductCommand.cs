@@ -11,9 +11,8 @@ namespace Product.Application.Features.Product.Commands.DeleteProduct
 {
     public class DeleteProductCommand : IRequest
     {
-        [JsonIgnore]
         public Guid Id { get; set; }
 
-        public Guid UpdatedBy { get; set; }
+        public Guid LastModifiedBy { get; set; }
     }
 }

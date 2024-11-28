@@ -22,6 +22,7 @@ namespace Product.Application.Features.Product.Commands.CreateProduct
         [StringLength(500)]
         public string Photo { get; set; }
 
+        [JsonIgnore]
         public Guid CreatedBy { get; set; }
         public int CategoryId { get; set; }
     }

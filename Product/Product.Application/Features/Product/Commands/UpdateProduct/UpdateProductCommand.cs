@@ -23,6 +23,7 @@ namespace Product.Application.Features.Product.Commands.UpdateProduct
         [StringLength(500)]
         public string Photo { get; set; }
 
+        [JsonIgnore]
         public Guid LastModifiedBy { get; set; }
         public int CategoryId { get; set; }
     }

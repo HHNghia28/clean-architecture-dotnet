@@ -15,8 +15,8 @@ namespace Product.Application.Features.Category.Commands.CreateCategory
             await categoryRepository.AddAsync(new Domain.Entities.Category
             {
                 Name = request.Name,
-                CreatedBy = request.UserId,
-                LastModifiedBy = request.UserId,
+                CreatedBy = request.CreatedBy,
+                LastModifiedBy = request.CreatedBy,
             });
 
             await categoryRepository.SaveAsync();
