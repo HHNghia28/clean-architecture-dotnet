@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Product.API.Filters;
 using Product.API.Middlewares;
 using Product.API.Services;
 using Product.Application.Features.Category.Queries.GetCategories;
