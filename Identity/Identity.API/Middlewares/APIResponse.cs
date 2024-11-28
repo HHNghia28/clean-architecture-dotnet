@@ -1,4 +1,4 @@
-﻿namespace Product.API.Filters
+﻿namespace Identity.API.Middlewares
 {
     public class APIResponse<T>
     {

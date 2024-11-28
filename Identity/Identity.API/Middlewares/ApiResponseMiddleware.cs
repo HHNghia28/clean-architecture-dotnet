@@ -1,8 +1,8 @@
-﻿using Product.Application.Exceptions;
+﻿using Identity.Application.Exceptions;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 
-namespace Product.API.Middlewares
+namespace Identity.API.Middlewares
 {
     public class ApiResponseMiddleware(RequestDelegate next)
     {

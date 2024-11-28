@@ -16,7 +16,6 @@ using Microsoft.OpenApi.Models;
 using Identity.Application.Interfaces;
 using Identity.Domain.Settings;
 using Microsoft.AspNetCore.Mvc;
-using Identity.API.Filters;
 using Identity.API.Middlewares;
 using Identity.Application.Features.Auth.Commands.RegisterUser;
 using Identity.Infrastructure.EmailHandler;
@@ -29,10 +28,7 @@ builder.Services.AddCarter();
 
 // Add services to the container.
 
-builder.Services.AddControllers(options =>
-{
-    options.Filters.Add<ApiResponseAttribute>();
-});
+builder.Services.AddControllers();
 
 builder.Services.AddApiVersioning(options =>
 {
@@ -154,7 +150,7 @@ app.MapControllers();
 
 app.UseCors(MyAllowSpecificOrigins);
 
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<ApiResponseMiddleware>();
 
 app.MapCarter();
 
