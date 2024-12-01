@@ -37,7 +37,7 @@
       "UpstreamHttpMethod": [ "POST", "GET", "PUT" ]
     },
     {
-      "DownstreamPathTemplate": "/api/v1/users/{id:guid}",
+      "DownstreamPathTemplate": "/api/v1/users/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -45,7 +45,7 @@
           "Port": 5176
         }
       ],
-      "UpstreamPathTemplate": "/api/v1/users/{id:guid}",
+      "UpstreamPathTemplate": "/api/v1/users/{id}",
       "UpstreamHttpMethod": [ "GET", "PUT" ]
     }
   ],

@@ -85,7 +85,7 @@ builder.Services.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
 
 builder.Services.AddMediatR(options =>
 {
-    options.RegisterServicesFromAssembly(typeof(RegisterUserCommandHandler).Assembly);
+    options.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 });
 
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();

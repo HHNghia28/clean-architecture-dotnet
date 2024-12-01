@@ -71,7 +71,7 @@ builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>(
 
 builder.Services.AddMediatR(cfg =>
 {
-    cfg.RegisterServicesFromAssembly(typeof(GetCategoriesQueryHandler).Assembly);
+    cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 });
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
