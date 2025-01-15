@@ -14,6 +14,7 @@ namespace Product.Application.DTO
         public string Name { get; set; }
         public int Price { get; set; } = 0;
         public int Discount { get; set; } = 0;
+        public int Quantity { get; set; } = 0;
         public string Photo { get; set; }
         public DateTime LastModifiedAt { get; set; }
         public int CategoryId { get; set; }

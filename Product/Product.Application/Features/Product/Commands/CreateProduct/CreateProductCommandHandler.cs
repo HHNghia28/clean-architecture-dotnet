@@ -20,6 +20,7 @@ namespace Product.Application.Features.Product.Commands.CreateProduct
                 Description = request.Description,
                 Price = request.Price,
                 Discount = request.Discount,
+                Quantity = request.Quantity,
                 Photo = request.Photo,
                 CreatedBy = request.CreatedBy,
                 LastModifiedBy = request.CreatedBy,
