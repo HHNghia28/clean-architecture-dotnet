@@ -21,6 +21,7 @@ using Identity.Application.Features.Auth.Commands.RegisterUser;
 using Identity.Infrastructure.EmailHandler;
 using Carter;
 using Asp.Versioning;
+using Identity.Application.Features.Users.Queries.GetUsers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -85,7 +86,7 @@ builder.Services.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
 
 builder.Services.AddMediatR(options =>
 {
-    options.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+    options.RegisterServicesFromAssembly(typeof(GetUsersQuery).Assembly);
 });
 
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();

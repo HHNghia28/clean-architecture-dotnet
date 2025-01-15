@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using Product.API.Middlewares;
 using Product.API.Services;
 using Product.Application.Features.Category.Queries.GetCategories;
+using Product.Application.Features.Product.Queries.GetProducts;
 using Product.Application.Interfaces;
 using Product.Infrastructure.Context;
 using Product.Infrastructure.Repositories;
@@ -71,7 +72,7 @@ builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>(
 
 builder.Services.AddMediatR(cfg =>
 {
-    cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+    cfg.RegisterServicesFromAssembly(typeof(GetProductsQueryHandler).Assembly);
 });
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
