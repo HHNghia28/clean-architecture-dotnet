@@ -12,7 +12,7 @@ using Order.Infrastructure.Context;
 namespace Order.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250118110652_init")]
+    [Migration("20250118131223_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -42,7 +42,7 @@ namespace Order.Infrastructure.Migrations
                     b.Property<Guid>("CreatedBy")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("Discount")
+                    b.Property<int>("DiscountFee")
                         .HasColumnType("integer");
 
                     b.Property<string>("FullName")
@@ -93,13 +93,13 @@ namespace Order.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("fb670327-720a-4b6a-9f67-9e65a9d8ce08"),
+                            Id = new Guid("81b32b4d-75ab-45ca-b932-ad2197004ade"),
                             Address = "Cần Thơ",
-                            CreatedAt = new DateTime(2025, 1, 18, 11, 6, 52, 513, DateTimeKind.Utc).AddTicks(9828),
+                            CreatedAt = new DateTime(2025, 1, 18, 13, 12, 23, 86, DateTimeKind.Utc).AddTicks(389),
                             CreatedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
-                            Discount = 0,
+                            DiscountFee = 0,
                             FullName = "Huỳnh Hữu Nghĩa",
-                            LastModifiedAt = new DateTime(2025, 1, 18, 11, 6, 52, 513, DateTimeKind.Utc).AddTicks(9829),
+                            LastModifiedAt = new DateTime(2025, 1, 18, 13, 12, 23, 86, DateTimeKind.Utc).AddTicks(391),
                             LastModifiedBy = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f207"),
                             Note = "Giao hàng nhanh",
                             Phone = "0832474699",
@@ -121,11 +121,6 @@ namespace Order.Infrastructure.Migrations
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
 
                     b.Property<int>("Discount")
                         .HasColumnType("integer");
@@ -161,12 +156,11 @@ namespace Order.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("dde5efe8-9d62-4920-b2ae-2eb1f9dab0fb"),
+                            Id = new Guid("9d6837ec-e060-4ffc-a13c-e15d338cf25e"),
                             Category = "Coffee",
-                            Description = "Với chất phin êm ái, hương vị cà phê Việt Nam hiện đại kết hợp cùng hương quế nhẹ nhàng và thạch cà phê hấp dẫn.",
                             Discount = 0,
                             Name = "PhinDi Cassia",
-                            OrderId = new Guid("fb670327-720a-4b6a-9f67-9e65a9d8ce08"),
+                            OrderId = new Guid("81b32b4d-75ab-45ca-b932-ad2197004ade"),
                             Photo = "https://www.highlandscoffee.com.vn/vnt_upload/product/06_2024/Phindi_Cassia/Phindi_Cassia_Highlands_products_Image1.jpg",
                             Price = 55000,
                             ProductId = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f201"),
@@ -174,12 +168,11 @@ namespace Order.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("09adeef3-9a8e-4dc8-ae4a-ced34750665d"),
+                            Id = new Guid("8be8d0fd-6ff6-4d30-8268-92c7329a9229"),
                             Category = "Coffee",
-                            Description = "PhinDi Hạt Dẻ Cười - Cà phê Phin thế hệ mới với chất Phin êm hơn, kết hợp sốt phistiachio mang đến hương vị mới lạ, không thể hấp dẫn hơn!",
                             Discount = 5,
                             Name = "Phindi Hạt Dẻ Cười",
-                            OrderId = new Guid("fb670327-720a-4b6a-9f67-9e65a9d8ce08"),
+                            OrderId = new Guid("81b32b4d-75ab-45ca-b932-ad2197004ade"),
                             Photo = "https://www.highlandscoffee.com.vn/vnt_upload/product/08_2023/Phindi_Pitaschio.jpg",
                             Price = 65000,
                             ProductId = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f202"),
@@ -187,12 +180,11 @@ namespace Order.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3ff62263-b826-4a0d-b946-2057c863dd78"),
+                            Id = new Guid("e6c309bd-62fb-4c0b-9ffd-7a2e7ce02e30"),
                             Category = "Other",
-                            Description = "Bò xốt vang - Một sự kết hợp mới lạ giữa hương vị thơm ngon của bò xốt vang và bánh trung thu truyền thống, mang đến một vị ngon đầy đặc sắc và độc đáo..\r\n\r\nĐẶT GIAO NGAY HOẶC GỌI 1900 1755\r\n\r\nLƯU Ý:\r\n\r\nBánh chỉ bán ở 6 tỉnh thành: Hồ Chí Minh, Hà Nội, Đà Nẵng, Đồng Nai, Bình Dương và Vũng Tàu (trừ các cửa hàng kiosk và sân bay quốc tế)",
                             Discount = 3,
                             Name = "BÁNH TRUNG THU - BÒ XỐT VANG - HIGHLANDS COFFEE",
-                            OrderId = new Guid("fb670327-720a-4b6a-9f67-9e65a9d8ce08"),
+                            OrderId = new Guid("81b32b4d-75ab-45ca-b932-ad2197004ade"),
                             Photo = "https://www.highlandscoffee.com.vn/vnt_upload/product/08_2024/Mooncake/MOONCAKES_PRODUCTSBO-XOT-VANG.png",
                             Price = 109000,
                             ProductId = new Guid("868e6f06-9728-48c3-a5d7-5d1aadf4f209"),

@@ -27,7 +27,7 @@ namespace Order.Infrastructure.Context
                         FullName = "Huỳnh Hữu Nghĩa",
                         Phone = "0832474699",
                         Address = "Cần Thơ",
-                        Discount = 0,
+                        DiscountFee = 0,
                         ShippingFee = 32000,
                         VoucherCode = "NGHIAHH",
                         VoucherName = "Voucher 28/08",
@@ -46,7 +46,6 @@ namespace Order.Infrastructure.Context
                     {
                         Id = Guid.NewGuid(),
                         Name = "PhinDi Cassia",
-                        Description = "Với chất phin êm ái, hương vị cà phê Việt Nam hiện đại kết hợp cùng hương quế nhẹ nhàng và thạch cà phê hấp dẫn.",
                         Photo = "https://www.highlandscoffee.com.vn/vnt_upload/product/06_2024/Phindi_Cassia/Phindi_Cassia_Highlands_products_Image1.jpg",
                         Category = "Coffee",
                         Price = 55000,
@@ -59,7 +58,6 @@ namespace Order.Infrastructure.Context
                     {
                         Id = Guid.NewGuid(),
                         Name = "Phindi Hạt Dẻ Cười",
-                        Description = "PhinDi Hạt Dẻ Cười - Cà phê Phin thế hệ mới với chất Phin êm hơn, kết hợp sốt phistiachio mang đến hương vị mới lạ, không thể hấp dẫn hơn!",
                         Photo = "https://www.highlandscoffee.com.vn/vnt_upload/product/08_2023/Phindi_Pitaschio.jpg",
                         Category = "Coffee",
                         Price = 65000,
@@ -72,7 +70,6 @@ namespace Order.Infrastructure.Context
                     {
                         Id = Guid.NewGuid(),
                         Name = "BÁNH TRUNG THU - BÒ XỐT VANG - HIGHLANDS COFFEE",
-                        Description = "Bò xốt vang - Một sự kết hợp mới lạ giữa hương vị thơm ngon của bò xốt vang và bánh trung thu truyền thống, mang đến một vị ngon đầy đặc sắc và độc đáo..\r\n\r\nĐẶT GIAO NGAY HOẶC GỌI 1900 1755\r\n\r\nLƯU Ý:\r\n\r\nBánh chỉ bán ở 6 tỉnh thành: Hồ Chí Minh, Hà Nội, Đà Nẵng, Đồng Nai, Bình Dương và Vũng Tàu (trừ các cửa hàng kiosk và sân bay quốc tế)",
                         Photo = "https://www.highlandscoffee.com.vn/vnt_upload/product/08_2024/Mooncake/MOONCAKES_PRODUCTSBO-XOT-VANG.png",
                         Category = "Other",
                         Price = 109000,

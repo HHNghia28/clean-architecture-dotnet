@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Order.API.Middlewares;
+using Order.Application.Features.Order.Queries.GetOrders;
 using Order.Application.Interfaces;
 using Order.Infrastructure.Context;
 using Order.Infrastructure.Repositories;
@@ -66,10 +67,10 @@ builder.Services.AddSwaggerGen(opt =>
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 
-//builder.Services.AddMediatR(cfg =>
-//{
-//    cfg.RegisterServicesFromAssembly(typeof(GetProductsQueryHandler).Assembly);
-//});
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(GetOrdersQueryHandler).Assembly);
+});
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
@@ -77,6 +78,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

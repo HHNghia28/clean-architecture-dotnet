@@ -25,7 +25,7 @@ namespace Order.Domain.Entities
         [StringLength(500)]
         public string? Note { get; set; }
         public int ShippingFee { get; set; } = 0;
-        public int Discount { get; set; } = 0;
+        public int DiscountFee { get; set; } = 0;
         [StringLength(100)]
         public string? VoucherName { get; set; }
         [StringLength(100)]
