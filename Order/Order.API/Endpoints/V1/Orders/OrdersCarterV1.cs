@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Order.Application.Features.Order.Commands.CancelOrder;
 using Order.Application.Features.Order.Commands.CreateOrder;
 using Order.Application.Features.Order.Commands.UpdateOrder;
+using Order.Application.Features.Order.Queries.GetOrder;
 using Order.Application.Features.Order.Queries.GetOrders;
 using Order.Application.Features.Order.Queries.GetOrdersByUserId;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -22,6 +23,7 @@ namespace Order.API.Endpoints.V1.Orders
                 .HasApiVersion(1);
 
             group1.MapGet(string.Empty, GetAll);
+            group1.MapGet("{id}", Get);
             group1.MapGet("user", GetAllByUserId);
             group1.MapPost(string.Empty, Create);
             group1.MapPut("{id}", Update);
@@ -31,6 +33,11 @@ namespace Order.API.Endpoints.V1.Orders
         public async Task<IResult> GetAll(ISender sender, [FromQuery] int pageSize = 10, [FromQuery] int pageNumber = 1)
         {
             return Results.Ok(await sender.Send(new GetOrdersQuery { PageNumber = pageNumber, PageSize = pageSize }));
+        }
+
+        public async Task<IResult> Get(ISender sender, Guid id)
+        {
+            return Results.Ok(await sender.Send(new GetOrderQuery { Id = id }));
         }
 
         public async Task<IResult> GetAllByUserId(ISender sender, [FromQuery] Guid userId, [FromQuery] int pageSize = 10, [FromQuery] int pageNumber = 1)

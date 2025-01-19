@@ -1,5 +1,7 @@
 ﻿using Dapper;
+using MediatR;
 using Order.Application.DTO;
+using Order.Application.Exceptions;
 using Order.Application.Interfaces;
 using Order.Application.Wrappers;
 using Order.Infrastructure.Context;
@@ -8,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Order.Infrastructure.Repositories
 {
@@ -15,9 +18,53 @@ namespace Order.Infrastructure.Repositories
     {
         private readonly ISqlConnectionFactory _sqlConnectionFactory = sqlConnectionFactory;
 
-        public Task<OrderResponse> GetOrder(Guid id)
+        public async Task<OrderResponse> GetOrder(Guid id)
         {
-            throw new NotImplementedException();
+            using var connection = _sqlConnectionFactory.GetOpenConnection();
+            const string sqlOrder = @"
+                    SELECT
+                        ""Orders"".""Id"",
+                        ""Orders"".""FullName"",
+                        ""Orders"".""Phone"",
+                        ""Orders"".""Address"",
+                        ""Orders"".""Note"",
+                        ""Orders"".""ShippingFee"",
+                        ""Orders"".""DiscountFee"",
+                        ""Orders"".""VoucherName"",
+                        ""Orders"".""VoucherCode"",
+                        ""Orders"".""VoucherValue"",
+                        ""Orders"".""TotalPrice"",
+                        ""Orders"".""Status"",
+                        ""Orders"".""CreatedBy"",
+                        ""Orders"".""CreatedAt"",
+                        ""Orders"".""LastModifiedBy"",
+                        ""Orders"".""LastModifiedAt""
+                    FROM ""Orders""
+                    WHERE ""Orders"".""Id"" = @Id
+                "
+            ;
+
+            var order = await connection.QueryFirstOrDefaultAsync<OrderResponse>(sqlOrder, new { Id = id }) ?? throw new NotFoundException("Order not found");
+
+            const string sqlOrderDetail = @"
+                    SELECT 
+                        ""OrderDetails"".""Id"",
+                        ""OrderDetails"".""Name"",
+                        ""OrderDetails"".""Price"",
+                        ""OrderDetails"".""Discount"",
+                        ""OrderDetails"".""Quantity"",
+                        ""OrderDetails"".""Photo"",
+                        ""OrderDetails"".""Category"",
+                        ""OrderDetails"".""ProductId""
+                    FROM ""OrderDetails""
+                    WHERE ""OrderDetails"".""OrderId"" = @OrderId
+                "
+            ;
+            var orderDetails = await connection.QueryAsync<OrderDetailResponse>(sqlOrderDetail, new { OrderId = order.Id });
+
+            order.Details = orderDetails.ToList();
+
+            return order;
         }
 
         public async Task<PagedResponse<List<OrdersResponse>>> GetOrders(PagedRequest request)
